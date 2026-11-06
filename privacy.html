@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>sc-app Privacy Policy</title>
+<meta name="description" content="How 66Pigs handles data in sc-app, the replenishment and S&amp;OP planning app for Shopify merchants.">
+<style>
+  :root { --bg:#fbfbfa; --fg:#1d1d1b; --muted:#5f5f5a; --rule:#e2e2dd; --link:#0b57a4; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#151514; --fg:#ecece8; --muted:#a6a6a0; --rule:#2e2e2b; --link:#7fb5ee; } }
+  html { background:var(--bg); }
+  body { margin:0 auto; max-width:46rem; padding:3rem 16px 4rem; background:var(--bg); color:var(--fg);
+         font:16px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+  h1 { font-size:1.9rem; line-height:1.2; margin:0 0 .25rem; }
+  h2 { font-size:1.15rem; margin:2.25rem 0 .5rem; padding-top:1.25rem; border-top:1px solid var(--rule); }
+  p.meta { color:var(--muted); margin:0 0 2rem; }
+  a { color:var(--link); }
+  ul { padding-left:1.25rem; }
+  li { margin:.25rem 0; }
+  table { border-collapse:collapse; width:100%; font-size:.95rem; }
+  th, td { text-align:left; vertical-align:top; padding:.5rem .5rem .5rem 0; border-bottom:1px solid var(--rule); }
+  th { font-weight:600; }
+  .wrap { overflow-x:auto; }
+</style>
+</head>
+<body>
+<h1>sc-app Privacy Policy</h1>
+<p class="meta">Last updated: 6 November 2026 · Provided by 66Pigs, Denmark</p>
+
+<p>sc-app is a replenishment and sales-and-operations planning app for Shopify merchants. It reads a store's products, inventory and order history to recommend what to reorder, when, and how much. This policy explains what data the app processes, why, where it is stored, how long it is kept, and the rights you have.</p>
+
+<h2>1. Who we are</h2>
+<p>sc-app is provided by <strong>66Pigs</strong>, based in Denmark ("we", "us"). Contact: <a href="mailto:66pigsgame@gmail.com">66pigsgame@gmail.com</a>.</p>
+<p>For data about a merchant's customers (order data), the merchant is the data controller and we act as the merchant's <strong>data processor</strong> under the EU General Data Protection Regulation (GDPR), processing it only on the merchant's instructions to provide the app. For the merchant's own account data (for example the store domain and the staff member who signs in), we are the controller.</p>
+
+<h2>2. What data we process</h2>
+<p>When a merchant installs sc-app, we access the following through Shopify's Admin API:</p>
+<ul>
+  <li><strong>Store and account data:</strong> store domain, store name, currency and time zone, the access token Shopify issues to the app, and, where Shopify provides it, the name and email of the staff member who signs in to the app (used only for authentication).</li>
+  <li><strong>Catalog and inventory:</strong> products, variants, SKUs, costs, inventory levels and locations.</li>
+  <li><strong>Order data:</strong> order identifiers and names, timestamps, cancellation and test flags, tags, and line items (variant, quantity, price, discount, refunds).</li>
+  <li><strong>Purchasing data:</strong> Shopify purchase orders, and any supplier, bill-of-materials, cost or purchase-history data the merchant enters or imports (for example a CSV export from Stocky).</li>
+</ul>
+<p><strong>We do not collect customer names, email addresses, phone numbers or postal addresses.</strong> The app never requests the customer fields of an order, and its order webhooks are limited to order and line-item identifiers, quantities, prices and dates. We do not use cookies or tracking on merchants' storefronts and we never contact a merchant's customers.</p>
+<p>The app reads inventory but never changes live inventory quantities in a merchant's store.</p>
+
+<h2>3. Why we process it</h2>
+<p>We use the data only to provide the app's planning features to the merchant: calculating daily demand and sales velocity, seasonality and forecast accuracy, reorder points and purchase-order suggestions, component and co-packer requirements, cash-flow projections and the monthly planning report. We do not sell data, share it for advertising, or use it to build profiles of individuals. We make no automated decisions about individuals: all forecasts and recommendations are about products, not people.</p>
+<p>The legal basis is performance of our contract with the merchant (GDPR Art. 6(1)(b)) and, for order data, the merchant's instructions as controller (Art. 28).</p>
+
+<h2>4. Where data is stored and who processes it</h2>
+<p>Data is stored in a PostgreSQL database hosted by Neon in the <strong>EU (Frankfurt, AWS eu-central-1)</strong>. We use these sub-processors:</p>
+<div class="wrap">
+<table>
+  <tr><th>Sub-processor</th><th>Purpose</th><th>Data</th></tr>
+  <tr><td>Shopify</td><td>Platform the app runs on; source of store data</td><td>All data listed above</td></tr>
+  <tr><td>Neon (Databricks)</td><td>Database hosting, EU</td><td>All data the app stores</td></tr>
+  <tr><td>Trigger.dev</td><td>Running background jobs (data sync, planning calculations)</td><td>Store identifiers and job inputs/outputs while a job runs</td></tr>
+  <tr><td>Anthropic</td><td>Optional: writing the text summary of the monthly planning report</td><td>Aggregated product-level figures only; no order or customer records</td></tr>
+</table>
+</div>
+<p>The hosting provider for the app's web server will be added to this list before public release. Where a sub-processor processes data outside the EU/EEA, the transfer relies on the EU Standard Contractual Clauses or an adequacy decision.</p>
+
+<h2>5. How long we keep data</h2>
+<ul>
+  <li><strong>Order data</strong> is kept for at most <strong>24 months</strong> from the order date. Older orders are deleted automatically when the plan is recalculated (normally every night).</li>
+  <li><strong>Planning results</strong> are kept for the most recent 20 plan calculations per store, plus any referenced by a saved monthly report.</li>
+  <li><strong>Uninstalling the app:</strong> when a merchant uninstalls sc-app, Shopify sends us a deletion request (<code>shop/redact</code>) 48 hours later, and we then delete all data held for that store.</li>
+  <li><strong>Customer data requests:</strong> because we store no customer names or contact details, Shopify's customer data and erasure requests (<code>customers/data_request</code>, <code>customers/redact</code>) are acknowledged; there is no customer-identifying data to return or erase.</li>
+</ul>
+
+<h2>6. Security</h2>
+<p>All data is encrypted in transit (TLS) and at rest. Access to the database and to production systems is limited to the people who operate the app. Every database read and write is scoped to the store it belongs to, so one merchant can never see another merchant's data.</p>
+
+<h2>7. Your rights</h2>
+<p>Under the GDPR you may request access to, correction of, deletion of, or a copy of your personal data, and you may object to or restrict its processing. Merchants can delete all their data at any time by uninstalling the app. Customers of a merchant should contact that merchant first; we will assist the merchant with any request. To exercise a right, email <a href="mailto:66pigsgame@gmail.com">66pigsgame@gmail.com</a>; we will reply within 30 days.</p>
+<p>You also have the right to complain to the Danish Data Protection Agency (Datatilsynet), <a href="https://www.datatilsynet.dk">datatilsynet.dk</a>, or to the supervisory authority where you live.</p>
+
+<h2>8. Changes to this policy</h2>
+<p>We will update this page when the way we handle data changes, and change the "Last updated" date above. Material changes will also be announced in the app.</p>
+
+<h2>9. Contact</h2>
+<p>66Pigs, Denmark · <a href="mailto:66pigsgame@gmail.com">66pigsgame@gmail.com</a></p>
+</body>
+</html>
